@@ -1,0 +1,20 @@
+package: github.com/SmartThingsOSS/smartapp-go
+import:
+- package: github.com/gin-gonic/gin
+  version: ^1.2
+  subpackages:
+  - binding
+- package: github.com/spf13/viper
+  version: ^1.0.0
+- package: github.com/satori/go.uuid
+  version: ^1.2.0
+- package: github.com/go-openapi/runtime
+  version: ^0.16.0
+- package: github.com/go-openapi/errors
+  version: ^0.16.0
+- package: github.com/jessevdk/go-flags
+  version: ^1.4.0
+- package: github.com/sirupsen/logrus
+  version: ^1.0.6
+- package: github.com/spacemonkeygo/httpsig
+  version: c76789e3b41d6ab0525564ce16092cf04b7af214

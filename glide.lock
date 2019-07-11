@@ -1,5 +1,5 @@
-hash: 134de6ca5caacaafbf4eeee4fb0dd5528c3f49a1b5b73f487bc21801468c0606
-updated: 2018-10-02T21:22:42.287935-05:00
+hash: d8b42b0d7ca872e84d898890aa59cc7b063e799f26f1b20df2387905b28add4a
+updated: 2019-07-11T15:29:28.144363-05:00
 imports:
 - name: github.com/asaskevich/govalidator
   version: f9ffefc3facfbe0caee3fea233cbb6e8208f4541
@@ -8,10 +8,10 @@ imports:
 - name: github.com/gin-contrib/sse
   version: 22d885f9ecc78bf4ee5d72b937e4bbcdc58e8cae
 - name: github.com/gin-gonic/gin
-  version: b869fe1415e4b9eb52f247441830d502aece2d4d
+  version: b75d67cd51eb53c3c3a2fc406524c940021ffbda
   subpackages:
   - binding
-  - json
+  - internal/json
   - render
 - name: github.com/globalsign/mgo
   version: 1ca0a4f7cbcbe61c005d1bd43fdd8bb8b71df6bc
@@ -23,7 +23,7 @@ imports:
   subpackages:
   - internal
 - name: github.com/go-openapi/errors
-  version: b2b2befaf267d082d779bcef52d682a47c779517
+  version: 0b2a0a1f89aa2eec2d13e03cd80ab0fdaf01f8ce
 - name: github.com/go-openapi/jsonpointer
   version: 52eb3d4b47c6a51ce2693c8e614a15a07c1af435
 - name: github.com/go-openapi/jsonreference
@@ -31,7 +31,7 @@ imports:
 - name: github.com/go-openapi/loads
   version: fd899182a268dcf25de088722375311d9dee2662
 - name: github.com/go-openapi/runtime
-  version: 9a3091f566c0811ef4d54b535179bc0fc484a11f
+  version: 58872d9a7ca5f28beff9effa19ac4c17d3e42cd3
   subpackages:
   - client
   - logger
@@ -95,7 +95,7 @@ imports:
 - name: github.com/satori/go.uuid
   version: f58768cc1a7a7e77a3bd49e98cdd21419399b6a3
 - name: github.com/sirupsen/logrus
-  version: a67f783a3814b8729bd2dac5780b5f78f8dbd64d
+  version: 839c75faf7f98a33d445d181f3018b5c3409a45e
 - name: github.com/spacemonkeygo/httpsig
   version: c76789e3b41d6ab0525564ce16092cf04b7af214
 - name: github.com/spf13/afero
@@ -109,20 +109,15 @@ imports:
 - name: github.com/spf13/pflag
   version: 583c0c0531f06d5278b7d917446061adc344b5cd
 - name: github.com/spf13/viper
-  version: 2c12c60302a5a0e62ee102ca9bc996277c2f64f5
+  version: b5bf975e5823809fb22c7644d008757f78a4259e
 - name: github.com/ugorji/go
   version: f3cacc17c85ecb7f1b6a9e373ee85d1480919868
   subpackages:
   - codec
-- name: golang.org/x/crypto
-  version: 2b6c08872f4b66da917bb4ce98df4f0307330f78
-  subpackages:
-  - ssh/terminal
 - name: golang.org/x/net
   version: 5f9ae10d9af5b1c89ae6904293b14b064d4ada23
   subpackages:
   - context
-  - context/ctxhttp
   - html
   - html/atom
   - html/charset
@@ -131,7 +126,6 @@ imports:
   version: 79b0c6888797020a994db17c8510466c72fe75d9
   subpackages:
   - unix
-  - windows
 - name: golang.org/x/text
   version: 7922cc490dd5a7dbaa7fd5d6196b49db59ac042f
   subpackages:

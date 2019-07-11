@@ -15,6 +15,8 @@ type SmartAppDefinition interface {
 	SetPingHandler(handler Handler)
 	SetConfigurationHandler(handler Handler)
 	SetOAuthCallbackHandler(handler Handler)
+	SetAuthConfig(config *AuthConfig)
+	GetAuthConfig() *AuthConfig
 	AddHandler(handler PredicateHandler)
 	BuildChain() []PredicateHandler
 }
@@ -28,6 +30,7 @@ type DefaultSmartAppDefinition struct {
 	ConfigurationHandler PredicateHandler
 	OAuthCallbackHandler PredicateHandler
 	AdditionalHandlers   []PredicateHandler
+	AuthConfig           *AuthConfig
 }
 
 func NewSmartAppDefinition() SmartAppDefinition {
@@ -186,4 +189,12 @@ func (h *DefaultSmartAppDefinition) BuildChain() []PredicateHandler {
 	chain = append(chain, &NotFoundHandler{})
 
 	return chain
+}
+
+func (h *DefaultSmartAppDefinition) SetAuthConfig(config *AuthConfig) {
+	h.AuthConfig = config
+}
+
+func (h *DefaultSmartAppDefinition) GetAuthConfig() *AuthConfig {
+	return h.AuthConfig
 }

@@ -1,0 +1,12 @@
+server:
+  host: "localhost"
+  port: "5555"
+  logLevel: "DEBUG"
+
+smartthings:
+  scheme: "https"
+  host: "api.smartthings.com"
+  debug: true
+
+auth:
+  publicKeyBase64: "<your-key>"

@@ -1,11 +1,11 @@
 package smartappgin
 
 import (
-	"crypto/rsa"
 	"github.com/SmartThingsOSS/smartapp-go/pkg/smartapp"
 	"github.com/SmartThingsOSS/smartapp-go/pkg/smartappcore"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
+	"log"
 )
 
 type RequestInterceptor func(params *smartappcore.SmartAppParams)
@@ -13,14 +13,13 @@ type ResponseInterceptor func(response *smartapp.ExecutionResponse, err error)
 
 type SmartApp interface {
 	Handler() gin.HandlerFunc
-	SetPublicKey(publicKey *rsa.PublicKey)
 	SetRequestInterceptor(interceptor RequestInterceptor)
 	SetResponseInterceptor(interceptor ResponseInterceptor)
 }
 
 type DefaultSmartApp struct {
 	App                 smartappcore.SmartApp
-	Authenticator       *smartappcore.Authenticator
+	Authenticator       smartappcore.Authenticator
 	RequestInterceptor  RequestInterceptor
 	ResponseInterceptor ResponseInterceptor
 }
@@ -30,12 +29,7 @@ func NewSmartApp(definition smartappcore.SmartAppDefinition) SmartApp {
 		App:                 smartappcore.NewSmartApp(definition),
 		RequestInterceptor:  func(params *smartappcore.SmartAppParams) {},
 		ResponseInterceptor: func(response *smartapp.ExecutionResponse, err error) {},
-	}
-}
-
-func (a *DefaultSmartApp) SetPublicKey(publicKey *rsa.PublicKey) {
-	if publicKey != nil {
-		a.Authenticator = smartappcore.NewAuthenticator(publicKey)
+		Authenticator:       smartappcore.NewAuthenticator(definition.GetAuthConfig()),
 	}
 }
 
@@ -70,8 +64,9 @@ func (a *DefaultSmartApp) Handler() gin.HandlerFunc {
 		a.RequestInterceptor(params)
 
 		if a.Authenticator != nil && request.Lifecycle != smartapp.AppLifecyclePING {
-			err := a.Authenticator.Verifier.Verify(ctx.Request)
+			err := a.Authenticator.Verify(ctx.Request)
 			if err != nil {
+				log.Printf("smartapp.authorization_invalid error=%v", err)
 				ctx.Status(401)
 				return
 			}

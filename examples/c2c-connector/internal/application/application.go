@@ -89,7 +89,12 @@ func getLogLevel(val string) log.Level {
 }
 
 func smartapp(config *viper.Viper) gin.HandlerFunc {
-	publicKey := config.GetString("auth.publicKey")
+	var authConfig smartappcore.AuthConfig
+	if err := config.UnmarshalKey("auth", &authConfig); err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+		}).Panic("Unable to parse auth config. ", err)
+	}
 	api := smartappcore.NewSmartThingsApi(&smartappcore.SmartThingsApiParams{
 		Host:    config.GetString("smartthings.host"),
 		Schemes: []string{config.GetString("smartthings.scheme")},
@@ -101,12 +106,9 @@ func smartapp(config *viper.Viper) gin.HandlerFunc {
 	definition.SetInstallHandler(handlers.NewInstallHandler(api).Handler())
 	definition.SetEventHandler(handlers.NewEventHandler(api).Handler())
 	definition.SetConfigurationHandler(handlers.NewConfigHandler().Handler())
+	definition.SetAuthConfig(&authConfig)
 	app := smartappgin.NewSmartApp(definition)
 	app.SetRequestInterceptor(getRequestInterceptor())
-
-	if publicKey != "" {
-		app.SetPublicKey(smartappcore.ParsePublicKeyBase64(publicKey))
-	}
 
 	return app.Handler()
 }
